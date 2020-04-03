@@ -13,4 +13,7 @@
 `az deployment group create --name new-routetable --resource-group myResourceGroup --template-file routetable.json`
 
 - vm-nw.json
-`az deployment group create --name vms --resource-group myResourceGroup3 --template-file  vm-nw.json`
+`az deployment group create --name vms --resource-group myResourceGroup --template-file  vm-nw.json`
+
+- rbac.json
+`az deployment sub create  -l local --template-file  rbac.json`

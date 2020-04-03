@@ -1,0 +1,56 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "roleName": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string",
+            "defaultValue": "RBAC"
+        }
+    },
+    "variables": {
+        "rbacGuid": "[guid(deployment().name)]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/roleDefinitions",
+            "apiVersion": "2017-09-01",
+            "name": "[variables('rbacGuid')]",
+            "properties": {
+                "roleName": "[parameters('roleName')]",
+                "IsCustom": true,
+                "Description": "[parameters('description')]",
+                "permissions": [
+                    {
+                        "Actions": [
+                            "Microsoft.Storage/*/read",
+                            "Microsoft.Network/*/read",
+                            "Microsoft.Compute/*/read",
+                            "Microsoft.Compute/virtualMachines/start/action",
+                            "Microsoft.Compute/virtualMachines/restart/action",
+                            "Microsoft.Authorization/*/read",
+                            "Microsoft.ResourceHealth/availabilityStatuses/read",
+                            "Microsoft.Resources/subscriptions/resourceGroups/read",
+                            "Microsoft.Insights/alertRules/*",
+                            "Microsoft.Insights/diagnosticSettings/*",
+                            "Microsoft.Support/*"
+                        ],
+                        "NotActions": [
+                        ]
+                    }
+                ],
+                "AssignableScopes": [
+                    "[subscription().id]"
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "assignableScope": {
+            "type": "string",
+            "value": "[subscription().id]"
+        }
+    }
+}
